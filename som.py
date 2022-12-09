@@ -1,14 +1,14 @@
 from sklearn.linear_model import LinearRegression
 from sm_dataset import SM_Dataset
 from sklearn.model_selection import cross_val_score
-from sklearn.ensemble import RandomForestRegressor
+from sklearn.ensemble import GradientBoostingRegressor
 
 
 def rf():
     for data_type in ["vb", "emd", "pca", "pca_emd"]:
         ds = SM_Dataset(data_type=data_type)
 
-        reg = RandomForestRegressor()
+        reg = GradientBoostingRegressor()
 
         r2 = cross_val_score(reg, ds.X, ds.y, cv=10, scoring="r2")
 
