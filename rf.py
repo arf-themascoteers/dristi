@@ -18,19 +18,19 @@ def rf():
         print("R-squared values:\n\t", end="")
         print("\n\t".join(map(str, r2)))
         print("\n")
-        print("\tMean R-squared",r2.mean())
+        print("Mean R-squared",r2.mean())
 
         mse = - cross_val_score(reg, ds.X, ds.y, cv=10, scoring="neg_mean_squared_error")
         print("MSE values:\n\t", end="")
         print("\n\t".join(map(str, mse)))
         print("\n")
-        print("\tMean MSE",mse.mean())
+        print("Mean MSE",mse.mean())
 
         mae = - cross_val_score(reg, ds.X, ds.y, cv=10, scoring="neg_mean_absolute_error")
         print("MAE values:\n\t", end="")
         print("\n\t".join(map(str, mae)))
         print("\n")
-        print("\tMean MAE",mae.mean())
+        print("Mean MAE",mae.mean())
 
 
 if __name__ == "__main__":

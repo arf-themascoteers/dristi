@@ -5,11 +5,12 @@ from sklearn.preprocessing import MinMaxScaler
 from torch.utils.data import Dataset
 from PyEMD import EMD
 from sklearn import decomposition
+from sklearn.utils import shuffle
 
 
 class SM_Dataset(Dataset):
     def __init__(self, data_type="vb"):
-        sm = pd.read_csv("sm.csv").to_numpy()
+        sm = shuffle(pd.read_csv("sm.csv").to_numpy())
         self.X = sm[:, 1:]
         self.y = sm[:, 0:1]
 
