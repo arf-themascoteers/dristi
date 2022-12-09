@@ -11,7 +11,6 @@ class SM_Dataset(Dataset):
     def __init__(self, is_train=True):
         sm = pd.read_csv("sm.csv").to_numpy()
         X = sm[:, 1:]
-        X = X.reshape(X.shape[0], 1, X.shape[1])
         y = sm[:, 0:1]
 
         scaler = MinMaxScaler()

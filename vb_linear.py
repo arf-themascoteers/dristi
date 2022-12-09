@@ -9,7 +9,7 @@ def linear():
     ds = SM_Dataset(is_train=True)
     reg = LinearRegression().fit(ds.X, ds.y)
     ds = SM_Dataset(is_train=False)
-    y_hat = reg.predict(ds.X, ds.y)
+    y_hat = reg.predict(ds.X)
     r2 = r2_score(ds.y, y_hat)
     mae = mean_absolute_error(ds.y, y_hat)
     mse = mean_squared_error(ds.y, y_hat)
