@@ -3,17 +3,23 @@ from sklearn.metrics import r2_score
 from sklearn.metrics import mean_absolute_error
 from sklearn.metrics import mean_squared_error
 from sm_dataset import SM_Dataset
-
+from sklearn.model_selection import cross_val_score
+from sklearn import metrics
 
 def linear():
-    ds = SM_Dataset(is_train=True)
-    reg = LinearRegression().fit(ds.X, ds.y)
-    ds = SM_Dataset(is_train=False)
-    y_hat = reg.predict(ds.X)
-    r2 = r2_score(ds.y, y_hat)
-    mae = mean_absolute_error(ds.y, y_hat)
-    mse = mean_squared_error(ds.y, y_hat)
+    ds = SM_Dataset(dstype="all")
+    reg = LinearRegression()
+    print(metrics.get_scorer_names())
 
+    r2 = cross_val_score(reg, ds.X, ds.y, cv=10, scoring="r2")
+    print(r2)
+    print(r2.mean())
+
+    mse = - cross_val_score(reg, ds.X, ds.y, cv=10, scoring="neg_mean_squared_error")
+    print(mse)
+    print(mse.mean())
+
+    exit()
     return r2, mae, mse
 
 

@@ -8,18 +8,23 @@ from torch.utils.data import Dataset
 
 
 class SM_Dataset(Dataset):
-    def __init__(self, is_train=True):
+    def __init__(self, dstype="all"):
         sm = pd.read_csv("sm.csv").to_numpy()
-        X = sm[:, 1:]
-        y = sm[:, 0:1]
+        self.X = sm[:, 1:]
+        self.y = sm[:, 0:1]
 
         scaler = MinMaxScaler()
-        y = scaler.fit_transform(y)
-        y = y.squeeze()
+        self.y = scaler.fit_transform(self.y)
+        self.y = self.y.squeeze()
 
-        self.X, X_test, self.y, y_test = train_test_split(X, y, random_state=1)
 
-        if not is_train:
+        self.X, X_test, self.y, y_test = train_test_split(self.X, self.y, random_state=1)
+
+        if dstype == "all":
+            self.X = np.concatenate((self.X, X_test), axis=0)
+            self.y = np.concatenate((self.y, y_test), axis=0)
+
+        elif dstype == "test":
             self.X = X_test
             self.y = y_test
 
