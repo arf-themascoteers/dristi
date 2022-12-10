@@ -9,30 +9,34 @@ from sklearn.utils import shuffle
 
 
 class SM_Dataset(Dataset):
-    def __init__(self, data_type="vb"):
-        sm = shuffle(pd.read_csv("sm.csv").to_numpy())
-        self.X = sm[:, 1:]
-        self.y = sm[:, 0:1]
+    def __init__(self, data_type="vb", X=None, y=None):
+        self.X = X
+        self.y = y
 
-        scaler = MinMaxScaler()
-        self.y = scaler.fit_transform(self.y)
-        self.y = self.y.squeeze()
+        if self.X is None or self.y is None:
+            sm = shuffle(pd.read_csv("sm.csv").to_numpy())
+            self.X = sm[:, 1:]
+            self.y = sm[:, 0:1]
 
-        if data_type == "emd":
-            imfs = self._get_emd(self.X)
-            self.X = np.concatenate((self.X, imfs), axis=1)
+            scaler = MinMaxScaler()
+            self.y = scaler.fit_transform(self.y)
+            self.y = self.y.squeeze()
 
-        if data_type == "pca":
-            pca = decomposition.PCA(n_components=7)
-            components = pca.fit_transform(self.X)
-            self.X = components
+            if data_type == "emd":
+                imfs = self._get_emd(self.X)
+                self.X = np.concatenate((self.X, imfs), axis=1)
 
-        if data_type == "pca_emd":
-            imfs = self._get_emd(self.X)
-            self.X = np.concatenate((self.X, imfs), axis=1)
-            pca = decomposition.PCA(n_components=7)
-            components = pca.fit_transform(self.X)
-            self.X = components
+            if data_type == "pca":
+                pca = decomposition.PCA(n_components=7)
+                components = pca.fit_transform(self.X)
+                self.X = components
+
+            if data_type == "pca_emd":
+                imfs = self._get_emd(self.X)
+                self.X = np.concatenate((self.X, imfs), axis=1)
+                pca = decomposition.PCA(n_components=7)
+                components = pca.fit_transform(self.X)
+                self.X = components
 
         self.X = torch.tensor(self.X, dtype=torch.float32)
         self.y = torch.tensor(self.y, dtype=torch.float32)
