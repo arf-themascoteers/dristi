@@ -21,7 +21,7 @@ def train(model, ds):
             loss = criterion(y_pred, y_true)
             loss.backward()
             optimizer.step()
-            print(f'Epoch:{epoch + 1}, Loss:{loss.item():.4f}')
+            #print(f'Epoch:{epoch + 1}, Loss:{loss.item():.4f}')
     #print("Training done. Machine saved to model.h5")
     torch.save(model.state_dict(), 'model.h5')
     return model
