@@ -9,6 +9,7 @@ from test import test
 
 def lstm():
     for data_type in ["vb", "emd"]:
+        print(f"Start {data_type}")
         ds = SM_Dataset(data_type=data_type)
         X = ds.X.detach().numpy()
         y = ds.y.detach().numpy()

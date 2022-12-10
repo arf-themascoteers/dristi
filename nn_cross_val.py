@@ -20,6 +20,7 @@ def cross_val(model_class, X, y, k):
         model = train(model, ds)
         ds = SM_Dataset(X=X_test, y=y_test)
         r2, mse, mae = test(model, ds)
+        print(f"{model_class.__name__} - Run#{i+1}: R2 = {r2}")
         r2s.append(r2)
         mses.append(mse)
         maes.append(mae)
