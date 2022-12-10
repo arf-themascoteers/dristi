@@ -1,18 +1,18 @@
 import torch
 from sklearn.linear_model import LinearRegression
 from sm_dataset import SM_Dataset
-from model_cnn1d import CNN1DMachine
+from model_lstm import LSTMMachine
 from nn_cross_val import cross_val
 from train import train
 from test import test
 
 
-def cnn1d():
+def lstm():
     for data_type in ["vb", "emd"]:
         ds = SM_Dataset(data_type=data_type)
         X = ds.X.detach().numpy()
         y = ds.y.detach().numpy()
-        r2, mse, mae = cross_val(CNN1DMachine, X, y, 10)
+        r2, mse, mae = cross_val(LSTMMachine, X, y, 10)
 
         print(data_type)
         print("-----------")
@@ -40,11 +40,8 @@ def cnn1d():
 
         print("End of:", data_type)
 
-        print("\n")
-        print("\n")
-
     print("All done. Bye.")
 
 
 if __name__ == "__main__":
-    cnn1d()
+    lstm()
