@@ -1,3 +1,4 @@
+import torch
 from sklearn.linear_model import LinearRegression
 from sm_dataset import SM_Dataset
 from model_cnn1d import CNN1DMachine
@@ -6,12 +7,12 @@ from train import train
 from test import test
 
 
-def rf():
+def cnn1d():
     for data_type in ["vb", "emd"]:
         ds = SM_Dataset(data_type=data_type)
-
-        model = CNN1DMachine()
-        r2, mse, mae = cross_val(model, ds.X, ds.y, 10)
+        X = ds.X.detach().numpy()
+        y = ds.y.detach().numpy()
+        r2, mse, mae = cross_val(CNN1DMachine, X, y, 10)
 
         print(data_type)
         print("-----------")
@@ -41,8 +42,4 @@ def rf():
 
 
 if __name__ == "__main__":
-    ds = SM_Dataset(data_type="pca")
-    model = CNN1DMachine(ds.X.shape[1])
-    model = train(model, ds)
-    r2, mse, mae = test(model, ds)
-    print(r2, mse, mae)
+    cnn1d()

@@ -10,7 +10,7 @@ def test(model, ds):
     BATCH_SIZE = 2000
     dataloader = DataLoader(ds, batch_size=BATCH_SIZE, shuffle=False)
     model.eval()
-    print(f"Test started ...")
+    #print(f"Test started ...")
     with torch.no_grad():
         for data, y_true in dataloader:
             y_pred = model(data)
