@@ -2,6 +2,7 @@ from sklearn.model_selection import KFold
 from sm_dataset import SM_Dataset
 from train import train
 from test import test
+import numpy as np
 
 
 def cross_val(model_class, X, y, k):
@@ -23,7 +24,7 @@ def cross_val(model_class, X, y, k):
         mses.append(mse)
         maes.append(mae)
 
-    return r2s, mses, maes
+    return np.array(r2s), np.array(mses), np.array(maes)
 
 
 if __name__ == "__main__":
